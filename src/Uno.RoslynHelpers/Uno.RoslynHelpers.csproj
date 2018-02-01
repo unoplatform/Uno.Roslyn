@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+	<PropertyGroup>
+		<TargetFrameworks>net461</TargetFrameworks>
+		<Product>$(AssemblyName) ($(TargetFramework))</Product>
+		<Authors>nventive</Authors>
+		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711;1570</NoWarn>
+		<BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
+		<DocumentationFile>bin\Release\$(TargetFramework)\Uno.Core.xml</DocumentationFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatSpecificWarningsAsErrors />
+		<DebugType>full</DebugType>
+		<DebugSymbols>True</DebugSymbols>
+		
+		<!-- 
+		Ensure that the cs files will be included as compile items in the project
+		referencing this nuget package.
+		-->
+		<IncludeContentInPack>true</IncludeContentInPack>
+		
+		<!-- This project does not create any binary -->
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<!-- 
+		This is required for the including project to compile the .cs file 
+		provided by this package
+		-->
+	  <PackageReference Include="Microsoft.CodeAnalysis" Version="2.0.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Content Include="Content\**\*.cs">
+			<!-- Ensure that the content's build action in the target project is Compile -->
+			<BuildAction>Compile</BuildAction>
+		</Content>
+	</ItemGroup>
+</Project>
