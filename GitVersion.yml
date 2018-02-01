@@ -1,19 +1,15 @@
 assembly-versioning-scheme: MajorMinorPatch
 mode: ContinuousDeployment
-continuous-delivery-fallback-tag: 'preview'
-next-version: 1.0.0
+next-version: 1.1.0
+continuous-delivery-fallback-tag: ""
 branches:
-  release:
-    regex: stable
-    mode: ContinuousDelivery
-    tag: ''
-    increment: Minor
-    is-release-branch: true
   master:
     tag: dev
-    mode: ContinuousDeployment
-    prevent-increment-of-merged-branch-version: true
-    tracks-release-branches: true
-    is-release-branch: false
+  stable:
+    tag: 
+  dev/.*?/(.*?):
+    tag: dev.{BranchName}
+  projects/(.*?):
+    tag: proj-{BranchName}
 ignore:
   sha: []
