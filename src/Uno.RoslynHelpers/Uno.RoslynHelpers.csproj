@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 	<PropertyGroup>
-		<TargetFrameworks>net461</TargetFrameworks>
+		<TargetFrameworks>netstandard1.3</TargetFrameworks>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<Authors>nventive</Authors>
 		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711;1570</NoWarn>
@@ -27,7 +27,8 @@
 		This is required for the including project to compile the .cs file 
 		provided by this package
 		-->
-	  <PackageReference Include="Microsoft.CodeAnalysis" Version="2.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.0.0" />
 	</ItemGroup>
 	
 	<ItemGroup>
