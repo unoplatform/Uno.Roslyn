@@ -23,7 +23,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Microsoft.CodeAnalysis
 {
-	public static class TypeSymbolExtensions
+	internal static class TypeSymbolExtensions
 	{
 
 		private const bool DoDefaultCompareUsingSubstitutedType = true;

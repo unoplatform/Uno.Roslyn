@@ -5,12 +5,17 @@
 		<Authors>nventive</Authors>
 		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711;1570</NoWarn>
 		<BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
-		<DocumentationFile>bin\Release\$(TargetFramework)\Uno.Core.xml</DocumentationFile>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 		<TreatSpecificWarningsAsErrors />
 		<DebugType>full</DebugType>
 		<DebugSymbols>True</DebugSymbols>
+
+		<PackageProjectUrl>https://github.com/nventive/Uno.Roslyn</PackageProjectUrl>
+		<PackageIconUrl>https://nv-assets.azurewebsites.net/logos/uno.png</PackageIconUrl>
+		<RepositoryUrl>https://github.com/nventive/Uno.Roslyn</RepositoryUrl>
+		<Description>A set of Roslyn extensions and helpers packaged as content files to avoid extertnal dependencies in analyzers and Uno source generators</Description>
+		<Copyright>Copyright (C) 2015-2018 nventive inc. - all rights reserved</Copyright>
 
 		<!-- 
 		Ensure that the cs files will be included as compile items in the project

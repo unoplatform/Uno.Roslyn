@@ -28,7 +28,7 @@ namespace Uno.RoslynHelpers.Helpers
 	/// </summary>
 	/// <typeparam name="TSyntax">The type of the syntax node</typeparam>
 	/// <typeparam name="TSymbol">The type of the symbol that is chosen as the semantic representation of the node</typeparam>
-	public class SyntaxSymbolPairing<TSyntax, TSymbol>
+	internal class SyntaxSymbolPairing<TSyntax, TSymbol>
 		where TSyntax : SyntaxNode
 		where TSymbol : ISymbol
 	{

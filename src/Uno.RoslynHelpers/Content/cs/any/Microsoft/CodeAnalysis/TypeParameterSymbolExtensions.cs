@@ -28,7 +28,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Microsoft.CodeAnalysis
 {
-	public static class TypeParameterSymbolExtensions
+	internal static class TypeParameterSymbolExtensions
 	{
 		/// Uses reflection to obtain the EffectiveBaseClassNoUseSiteDiagnostics property and its value. 
 		/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#275
