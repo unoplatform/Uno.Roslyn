@@ -23,7 +23,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Uno.RoslynHelpers.Helpers
 {
-	public class CyclomaticComplexityWalker : CSharpSyntaxWalker
+	internal class CyclomaticComplexityWalker : CSharpSyntaxWalker
 	{
 		private Dictionary<SyntaxNode, RegionInfo> _codeRegionInfos;
 		private SyntaxNode _currentCodeRegionRoot;

@@ -30,7 +30,7 @@ namespace Uno.RoslynHelpers.Helpers
 	/// Used to provided delegate predicates, wrapped as ExtendedSyntaxType objects, to facilitate the 
 	/// identification of more complex or composite syntax types that do not exist by default.
 	/// </summary>
-	public class ExtendedSyntaxType
+	internal class ExtendedSyntaxType
 	{
 		public const bool DefaultConsiderParametersAsPotentialTargets = false;
 

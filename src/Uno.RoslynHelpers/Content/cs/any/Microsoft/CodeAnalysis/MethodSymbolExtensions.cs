@@ -25,7 +25,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Microsoft.CodeAnalysis
 {
-	public static class MethodSymbolExtensions
+	internal static class MethodSymbolExtensions
 	{
 		private const bool DefaultMatchUsingInheritance = true;
 

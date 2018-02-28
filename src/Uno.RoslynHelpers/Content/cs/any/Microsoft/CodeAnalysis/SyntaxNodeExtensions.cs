@@ -27,7 +27,7 @@ using Uno.RoslynHelpers.Helpers;
 
 namespace Microsoft.CodeAnalysis
 {
-	public static class SyntaxNodeExtensions
+	internal static class SyntaxNodeExtensions
 	{
 		public const bool DefaultConsiderParametersAsPotentialTargets = false;
 		public const bool DefaultPrioritizeSkip = false;
