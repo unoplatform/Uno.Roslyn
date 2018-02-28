@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uno.RoslynHelpers", "Uno.RoslynHelpers\Uno.RoslynHelpers.csproj", "{4D30BAF0-054E-48A3-8B3C-A3CD426DF387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uno.Roslyn", "Uno.RoslynHelpers\Uno.Roslyn.csproj", "{4D30BAF0-054E-48A3-8B3C-A3CD426DF387}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

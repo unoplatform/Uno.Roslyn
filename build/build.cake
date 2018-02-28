@@ -18,7 +18,7 @@ var target = Argument("target", "Default");
 
 var baseDir = MakeAbsolute(Directory("../")).ToString();
 var buildDir = baseDir + "/build";
-var Solution = baseDir + "/src/uno.roslynhelpers.sln";
+var Solution = baseDir + "/src/uno.roslyn.sln";
 GitVersion versionInfo = null;
 
 //////////////////////////////////////////////////////////////////////
