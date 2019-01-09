@@ -1,0 +1,35 @@
+pool:
+  name: 'Hosted VS2017'
+
+trigger:
+  branches:
+    include:
+      - master
+      - stable
+
+pr:
+  branches:
+    include:
+      - master
+      - stable
+
+steps:
+  - checkout: self
+    clean: true
+
+  - powershell: './build/build.ps1 -Script build/build.cake'
+
+  - task: VSTest@2
+    inputs:
+      testAssemblyVer2: '**\*.tests.dll'
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: ./build/
+      Contents: '*.nupkg'
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      ArtifactType: Container
+      ArtifactName: $(Build.DefinitionName)
