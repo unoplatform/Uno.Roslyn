@@ -427,10 +427,10 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Descends the hierarchy of <see cref="root"/>'s descendants depth-first, looking for nodes that match <see cref="keepPredicate"/>. 
-		/// If an encountered node matches <see cref="keepPredicate"/>, it is returned, and its own descendants are ignored. 
-		/// If an encountered node matches <see cref="skipPredicate"/>, it and its descendants are ignored.
-		/// If <see cref="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
+		/// Descends the hierarchy of <paramref name="root"/>'s descendants depth-first, looking for nodes that match <paramref name="keepPredicate"/>. 
+		/// If an encountered node matches <paramref name="keepPredicate"/>, it is returned, and its own descendants are ignored. 
+		/// If an encountered node matches <paramref name="skipPredicate"/>, it and its descendants are ignored.
+		/// If <paramref name="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
 		/// </summary>
 		/// <param name="root">The root syntax node to start the analysis at</param>
 		/// <param name="keepPredicate">The predicate used to indicate if a node should be retained or not.</param>
@@ -471,11 +471,11 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Descends the hierarchy of <see cref="root"/>'s descendants depth-first, looking for nodes that match <see cref="keepPredicate"/>. 
-		/// If an encountered node matches <see cref="keepPredicate"/>, it is returned, and its own descendants are ignored. 
-		/// If an encountered node matches <see cref="skipPredicate"/>, it and its descendants are ignored.
-		/// If <see cref="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
-		/// If no value is given for the <see cref="keepPredicate"/>, the predicate is assumed to be always 'true", and so any subtree root matching the 
+		/// Descends the hierarchy of <paramref name="root"/>'s descendants depth-first, looking for nodes that match <paramref name="keepPredicate"/>. 
+		/// If an encountered node matches <paramref name="keepPredicate"/>, it is returned, and its own descendants are ignored. 
+		/// If an encountered node matches <paramref name="skipPredicate"/>, it and its descendants are ignored.
+		/// If <paramref name="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
+		/// If no value is given for the <paramref name="keepPredicate"/>, the predicate is assumed to be always 'true", and so any subtree root matching the 
 		/// given type will be returned (while its descendants are ignored)
 		/// </summary>
 		/// <param name="root">The root syntax node to start the analysis at</param>

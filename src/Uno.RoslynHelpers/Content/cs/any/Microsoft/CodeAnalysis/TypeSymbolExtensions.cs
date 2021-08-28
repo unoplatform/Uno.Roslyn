@@ -379,7 +379,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the accessible (public and protected) methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are available from within the provided type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are available from within the provided type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllAccessibleMethodsFromWithinType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -400,7 +400,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the publicly accessible methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllPubliclyAccessibleMethodsFromType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -420,7 +420,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods from a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods from a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		private static IEnumerable<IMethodSymbol> GetAllMethodsWithinType(
 			ITypeSymbol currentType,
 			SyntaxNodeAnalysisContext context,
