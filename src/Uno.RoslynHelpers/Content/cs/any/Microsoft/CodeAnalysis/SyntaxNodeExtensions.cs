@@ -508,7 +508,7 @@ namespace Microsoft.CodeAnalysis
 
 		/// <summary>
 		/// Returns true if file name indicates that the code is generated.
-		/// https://github.com/dotnet/roslyn/blob/master/src/Workspaces/Core/Portable/GeneratedCodeRecognition/GeneratedCodeRecognitionServiceFactory.cs
+		/// https://github.com/dotnet/roslyn/blob/2ab5dcb6f1e3e11e7cb9147ea2f88f6fa418fbf2/src/Compilers/Core/Portable/InternalUtilities/GeneratedCodeUtilities.cs#L61-L86
 		/// </summary>
 		/// <param name="fileName"></param>
 		/// <returns></returns>
@@ -520,7 +520,7 @@ namespace Microsoft.CodeAnalysis
 			}
 
 			string extension = Path.GetExtension(fileName);
-			if (extension != string.Empty)
+			if (!string.IsNullOrEmpty(extension))
 			{
 				fileName = Path.GetFileNameWithoutExtension(fileName);
 
