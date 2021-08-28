@@ -116,8 +116,7 @@ namespace Microsoft.CodeAnalysis
 		/// Checks if the underlying type of the current type symbol derives from the type with the provided name  
 		/// </summary>
 		/// <param name="symbol">The current type symbol</param>
-		/// <param name="otherTypeFullName">The full name for the System.Type instance the current type symbol will be checked against for inheritance/implementation</param>
-		/// <param name="context">The analysis context</param>
+		/// <param name="otherType">The other type symbol that the <paramref name="symbol"/> will be checked against for inheritance/implementation</param>
 		/// <returns>If the underlying type of the current type symbol implements or inherits the target type</returns>
 		public static bool DerivesFromType(this ITypeSymbol symbol, ITypeSymbol otherType)
 		{
