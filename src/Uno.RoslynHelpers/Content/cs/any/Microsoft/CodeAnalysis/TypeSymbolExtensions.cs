@@ -479,7 +479,7 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary<TKey,T> or Dictionary<TKey,List<T>>, but not Dictionary<bool,int> or Dictionary<bool,List<string>>), false otherwise
+		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary&lt;TKey,T&gt; or Dictionary&lt;TKey,List&lt;T&gt;&gt;, but not Dictionary&lt;bool,int&gt; or Dictionary&lt;bool,List&lt;string&gt;&gt;), false otherwise
 		/// </summary>
 		/// <param name="typeSymbol"></param>
 		/// <returns></returns>

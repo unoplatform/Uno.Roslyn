@@ -3,7 +3,7 @@
 		<TargetFrameworks>netstandard1.3</TargetFrameworks>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<Authors>nventive</Authors>
-		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711;1570</NoWarn>
+		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711</NoWarn>
 		<BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
