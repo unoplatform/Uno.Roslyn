@@ -416,6 +416,7 @@ namespace Microsoft.CodeAnalysis
 		/// (methods and anonymous functions). 
 		/// </summary>
 		/// <param name="rootNode">The SyntaxNode to measure cyclomatic complexity within</param>
+		/// <param name="model">The semantic model</param>
 		/// <returns>A sequence of RegionInfo objects, each containing the region-defining node (either rootNode or a function-defining node)
 		/// and cyclomatic complexity values for the region. There will always be at least one RegionInfo returned for the rootNode,
 		///  plus one for each nested function.</returns>
