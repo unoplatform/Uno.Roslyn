@@ -27,7 +27,7 @@ namespace Uno.RoslynHelpers.Helpers
 	{
 		private Dictionary<SyntaxNode, RegionInfo> _codeRegionInfos;
 		private SyntaxNode _currentCodeRegionRoot;
-		private int _nestingLevel = 0;
+		private int _nestingLevel;
 		private SemanticModel _model;
 
 		public IEnumerable<RegionInfo> Results { get { return _codeRegionInfos.Values; } }
