@@ -45,10 +45,10 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Returns true if two ITypeParameterSymbols (symbols corresponding to a type parameter, eg 'T' in SomeMethod<T>() { T t = ... }) appear to be equivalent, 
+		/// Returns true if two ITypeParameterSymbols (symbols corresponding to a type parameter, eg 'T' in SomeMethod&lt;T&gt;() { T t = ... }) appear to be equivalent, 
 		/// meaning that they appear to have matching constraints.
 		/// 
-		/// Note: this method is currently not watertight, due to difficult cases like self-referential constraints (eg 'where T : IComparable<T>')
+		/// Note: this method is currently not watertight, due to difficult cases like self-referential constraints (eg 'where T : IComparable&lt;T&gt;')
 		/// </summary>
 		/// <param name="current">Symbol to compare</param>
 		/// <param name="other">Symbol to compare</param>
@@ -72,7 +72,7 @@ namespace Microsoft.CodeAnalysis
 		/// Provides all the resolved/effetive interface constraints of the given type parameter symbol. 
 		/// <example>
 		/// <code>
-		/// public Method<T, U, V> where T : U where U : IEnumerable, V where V : IComparable
+		/// public Method&lt;T, U, V&gt; where T : U where U : IEnumerable, V where V : IComparable
 		/// // U will have the following effective interface constraints: IEnumerable, Icomparable
 		/// </code>
 		/// </example>

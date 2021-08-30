@@ -108,6 +108,7 @@ namespace Microsoft.CodeAnalysis
 		/// Returns true if the symbol can be accessed from the current module
 		/// </summary>
 		/// <param name="symbol"></param>
+		/// <param name="currentSymbol"></param>
 		/// <returns></returns>
 		public static bool IsLocallyPublic(this ISymbol symbol, IModuleSymbol currentSymbol) =>
 			symbol.DeclaredAccessibility == Accessibility.Public 

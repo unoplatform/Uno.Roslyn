@@ -416,6 +416,7 @@ namespace Microsoft.CodeAnalysis
 		/// (methods and anonymous functions). 
 		/// </summary>
 		/// <param name="rootNode">The SyntaxNode to measure cyclomatic complexity within</param>
+		/// <param name="model">The semantic model</param>
 		/// <returns>A sequence of RegionInfo objects, each containing the region-defining node (either rootNode or a function-defining node)
 		/// and cyclomatic complexity values for the region. There will always be at least one RegionInfo returned for the rootNode,
 		///  plus one for each nested function.</returns>
@@ -427,10 +428,10 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Descends the hierarchy of <see cref="root"/>'s descendants depth-first, looking for nodes that match <see cref="keepPredicate"/>. 
-		/// If an encountered node matches <see cref="keepPredicate"/>, it is returned, and its own descendants are ignored. 
-		/// If an encountered node matches <see cref="skipPredicate"/>, it and its descendants are ignored.
-		/// If <see cref="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
+		/// Descends the hierarchy of <paramref name="root"/>'s descendants depth-first, looking for nodes that match <paramref name="keepPredicate"/>. 
+		/// If an encountered node matches <paramref name="keepPredicate"/>, it is returned, and its own descendants are ignored. 
+		/// If an encountered node matches <paramref name="skipPredicate"/>, it and its descendants are ignored.
+		/// If <paramref name="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
 		/// </summary>
 		/// <param name="root">The root syntax node to start the analysis at</param>
 		/// <param name="keepPredicate">The predicate used to indicate if a node should be retained or not.</param>
@@ -471,11 +472,11 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Descends the hierarchy of <see cref="root"/>'s descendants depth-first, looking for nodes that match <see cref="keepPredicate"/>. 
-		/// If an encountered node matches <see cref="keepPredicate"/>, it is returned, and its own descendants are ignored. 
-		/// If an encountered node matches <see cref="skipPredicate"/>, it and its descendants are ignored.
-		/// If <see cref="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
-		/// If no value is given for the <see cref="keepPredicate"/>, the predicate is assumed to be always 'true", and so any subtree root matching the 
+		/// Descends the hierarchy of <paramref name="root"/>'s descendants depth-first, looking for nodes that match <paramref name="keepPredicate"/>. 
+		/// If an encountered node matches <paramref name="keepPredicate"/>, it is returned, and its own descendants are ignored. 
+		/// If an encountered node matches <paramref name="skipPredicate"/>, it and its descendants are ignored.
+		/// If <paramref name="prioritizeSkip"/> is true, the skip predicate takes precedence over the keep predicate.
+		/// If no value is given for the <paramref name="keepPredicate"/>, the predicate is assumed to be always 'true", and so any subtree root matching the 
 		/// given type will be returned (while its descendants are ignored)
 		/// </summary>
 		/// <param name="root">The root syntax node to start the analysis at</param>
@@ -507,7 +508,7 @@ namespace Microsoft.CodeAnalysis
 
 		/// <summary>
 		/// Returns true if file name indicates that the code is generated.
-		/// https://github.com/dotnet/roslyn/blob/master/src/Workspaces/Core/Portable/GeneratedCodeRecognition/GeneratedCodeRecognitionServiceFactory.cs
+		/// https://github.com/dotnet/roslyn/blob/2ab5dcb6f1e3e11e7cb9147ea2f88f6fa418fbf2/src/Compilers/Core/Portable/InternalUtilities/GeneratedCodeUtilities.cs#L61-L86
 		/// </summary>
 		/// <param name="fileName"></param>
 		/// <returns></returns>
@@ -519,7 +520,7 @@ namespace Microsoft.CodeAnalysis
 			}
 
 			string extension = Path.GetExtension(fileName);
-			if (extension != string.Empty)
+			if (!string.IsNullOrEmpty(extension))
 			{
 				fileName = Path.GetFileNameWithoutExtension(fileName);
 

@@ -116,8 +116,7 @@ namespace Microsoft.CodeAnalysis
 		/// Checks if the underlying type of the current type symbol derives from the type with the provided name  
 		/// </summary>
 		/// <param name="symbol">The current type symbol</param>
-		/// <param name="otherTypeFullName">The full name for the System.Type instance the current type symbol will be checked against for inheritance/implementation</param>
-		/// <param name="context">The analysis context</param>
+		/// <param name="otherType">The other type symbol that the <paramref name="symbol"/> will be checked against for inheritance/implementation</param>
 		/// <returns>If the underlying type of the current type symbol implements or inherits the target type</returns>
 		public static bool DerivesFromType(this ITypeSymbol symbol, ITypeSymbol otherType)
 		{
@@ -379,7 +378,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the accessible (public and protected) methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are available from within the provided type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are available from within the provided type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllAccessibleMethodsFromWithinType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -400,7 +399,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the publicly accessible methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllPubliclyAccessibleMethodsFromType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -420,7 +419,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods from a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods from a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		private static IEnumerable<IMethodSymbol> GetAllMethodsWithinType(
 			ITypeSymbol currentType,
 			SyntaxNodeAnalysisContext context,
@@ -479,7 +478,7 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary<TKey,T> or Dictionary<TKey,List<T>>, but not Dictionary<bool,int> or Dictionary<bool,List<string>>), false otherwise
+		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary&lt;TKey,T&gt; or Dictionary&lt;TKey,List&lt;T&gt;&gt;, but not Dictionary&lt;bool,int&gt; or Dictionary&lt;bool,List&lt;string&gt;&gt;), false otherwise
 		/// </summary>
 		/// <param name="typeSymbol"></param>
 		/// <returns></returns>

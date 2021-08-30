@@ -27,7 +27,7 @@ namespace Uno.RoslynHelpers.Helpers
 	{
 		private Dictionary<SyntaxNode, RegionInfo> _codeRegionInfos;
 		private SyntaxNode _currentCodeRegionRoot;
-		private int _nestingLevel = 0;
+		private int _nestingLevel;
 		private SemanticModel _model;
 
 		public IEnumerable<RegionInfo> Results { get { return _codeRegionInfos.Values; } }
@@ -91,7 +91,7 @@ namespace Uno.RoslynHelpers.Helpers
 			{
 				var parameterSymbol = _model.GetDeclaredSymbol(simpleLambda.Parameter);
 
-				var isBuilderType = parameterSymbol?.ToDisplayString()?.EndsWith("Builder");
+				var isBuilderType = parameterSymbol?.ToDisplayString()?.EndsWith("Builder", StringComparison.Ordinal);
 
 				if (isBuilderType ?? false)
 				{
@@ -100,23 +100,6 @@ namespace Uno.RoslynHelpers.Helpers
 			}
 
 			return false;
-		}
-
-		private static int Factorial(int input)
-		{
-			if (input < 0)
-			{
-				throw new ArgumentOutOfRangeException("Factorial is only defined for non-negative integers.");
-			}
-
-			int answer = 1;
-
-			while (input > 1)
-			{
-				answer *= input--;
-			}
-
-			return answer;
 		}
 
 		public class RegionInfo
