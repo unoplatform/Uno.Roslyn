@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 // ******************************************************************
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace Microsoft.CodeAnalysis
 		{
 			var currentArgTypes = current.Parameters.Select(param => param.Type);
 			var otherArgTypes = other.Parameters.Select(param => param.Type);
-			return currentArgTypes.SequenceEqual(otherArgTypes);
+			return currentArgTypes.SequenceEqual(otherArgTypes, SymbolEqualityComparer.Default);
 		}
 
 		/// <summary>
@@ -99,7 +101,7 @@ namespace Microsoft.CodeAnalysis
 			return asyncCandidateReturnType != null &&
 				   asyncCandidateReturnType.IsGenericType &&
 				   asyncCandidate.ReturnType.OriginalDefinition.DerivesFromType<Task>(context) &&
-				   asyncCandidateReturnType.TypeArguments.FirstOrDefault()?.Equals(target.ReturnType) == true;
+				   SymbolEqualityComparer.Default.Equals(asyncCandidateReturnType.TypeArguments.FirstOrDefault(), target.ReturnType) == true;
 		}
 
 		/// <summary>

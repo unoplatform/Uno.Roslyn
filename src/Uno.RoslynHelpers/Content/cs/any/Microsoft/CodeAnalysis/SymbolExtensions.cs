@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 // ******************************************************************
+#nullable disable
+
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -85,7 +87,7 @@ namespace Microsoft.CodeAnalysis
 		{
 			do
 			{
-				if (symbol == other)
+				if (SymbolEqualityComparer.Default.Equals(symbol, other))
 				{
 					return true;
 				}
@@ -114,7 +116,7 @@ namespace Microsoft.CodeAnalysis
 			symbol.DeclaredAccessibility == Accessibility.Public 
 			||
 			(
-				symbol.Locations.Any(l => l.MetadataModule == currentSymbol)
+				symbol.Locations.Any(l => SymbolEqualityComparer.Default.Equals(l.MetadataModule, currentSymbol))
 				&& symbol.DeclaredAccessibility == Accessibility.Internal
 			);
 
@@ -143,12 +145,12 @@ namespace Microsoft.CodeAnalysis
 
 		public static AttributeData FindAttribute(this ISymbol property, INamedTypeSymbol attributeClassSymbol)
 		{
-			return property.GetAttributes().FirstOrDefault(a => a.AttributeClass == attributeClassSymbol);
+			return property.GetAttributes().FirstOrDefault(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, attributeClassSymbol));
 		}
 
 		public static AttributeData FindAttributeFlattened(this ISymbol property, INamedTypeSymbol attributeClassSymbol)
 		{
-			return property.GetAllAttributes().FirstOrDefault(a => a.AttributeClass == attributeClassSymbol);
+			return property.GetAllAttributes().FirstOrDefault(a => SymbolEqualityComparer.Default.Equals(a.AttributeClass, attributeClassSymbol));
 		}
 
 		/// <summary>
@@ -393,7 +395,7 @@ namespace Microsoft.CodeAnalysis
 		public static bool HasAttributes(this ISymbol symbol, params INamedTypeSymbol[] attributes)
 		{
 			var currentSymbolAttributes = symbol.GetAttributes();
-			return currentSymbolAttributes.Any() && currentSymbolAttributes.All(x => attributes.Contains(x.AttributeClass));
+			return currentSymbolAttributes.Any() && currentSymbolAttributes.All(x => attributes.Contains(x.AttributeClass, SymbolEqualityComparer.Default));
 		}
 	}
 }
