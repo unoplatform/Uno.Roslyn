@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<Authors>nventive</Authors>
 		<BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
@@ -11,7 +11,7 @@
 		<DebugSymbols>True</DebugSymbols>
 
 		<PackageProjectUrl>https://github.com/nventive/Uno.Roslyn</PackageProjectUrl>
-		<PackageIconUrl>https://nv-assets.azurewebsites.net/logos/uno.png</PackageIconUrl>
+		<PackageIcon>uno.png</PackageIcon>
 		<RepositoryUrl>https://github.com/nventive/Uno.Roslyn</RepositoryUrl>
 		<Description>A set of Roslyn extensions and helpers packaged as content files to avoid extertnal dependencies in analyzers and Uno source generators</Description>
 		<Copyright>Copyright (C) 2015-2018 nventive inc. - all rights reserved</Copyright>
@@ -29,6 +29,10 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+		<None Include="uno.png" Pack="true" PackagePath="\" />
+	</ItemGroup>	
+	
+	<ItemGroup>
 		<!-- 
 		This is required for the including project to compile the .cs file 
 		provided by this package
@@ -38,8 +42,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+		<Content Include="_._">
+			<Pack>true</Pack>
+			<PackagePath>lib/$(TargetFramework)</PackagePath>			
+		</Content>
 		<Content Include="Content\**\*.cs">
-			<!-- Ensure that the content's build action in the target project is Compile -->
+				<!-- Ensure that the content's build action in the target project is Compile -->
 			<BuildAction>Compile</BuildAction>
 		</Content>
 	</ItemGroup>
