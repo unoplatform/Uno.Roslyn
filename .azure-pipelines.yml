@@ -31,7 +31,7 @@ steps:
 
   - pwsh: |
       cd $(build.sourcesdirectory)/src
-      dotnet msbuild Uno.Roslyn.sln /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)" "/p:PackageVersion=$(GITVERSION.FullSemVer)" "/p:InformationalVersion=$(GITVERSION.InformationalVersion)"  /detailedsummary
+      dotnet pack Uno.Roslyn.sln /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)" "/p:PackageVersion=$(GITVERSION.FullSemVer)" "/p:InformationalVersion=$(GITVERSION.InformationalVersion)"  /detailedsummary
     displayName: Build
 
   - task: VSTest@2
