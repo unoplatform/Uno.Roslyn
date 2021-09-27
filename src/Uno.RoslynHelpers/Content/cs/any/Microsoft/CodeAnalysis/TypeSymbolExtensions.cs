@@ -77,7 +77,7 @@ namespace Microsoft.CodeAnalysis
 			var currentTypeSymbol = compareUsingSubstitutedType ? current : current?.OriginalDefinition;
 			var otherTypeSymbol = compareUsingSubstitutedType ? other : other?.OriginalDefinition;
 
-			return currentTypeSymbol != null && currentTypeSymbol.OriginalDefinition.Equals(otherTypeSymbol);
+			return currentTypeSymbol != null && SymbolEqualityComparer.Default.Equals(currentTypeSymbol.OriginalDefinition, otherTypeSymbol);
 		}
 
 		/// <summary>
@@ -125,8 +125,8 @@ namespace Microsoft.CodeAnalysis
 			var baseTypes = GetBaseTypesAndThis(symbol);
 			var implementedInterfaces = GetAllInterfacesIncludingThis(symbol);
 
-			return baseTypes.Any(baseType => baseType.Equals(otherType) ||
-				   implementedInterfaces.Any(baseInterfaceType => baseInterfaceType.Equals(otherType)));
+			return baseTypes.Any(baseType => SymbolEqualityComparer.Default.Equals(baseType, otherType)) ||
+				   implementedInterfaces.Any(baseInterfaceType => SymbolEqualityComparer.Default.Equals(baseInterfaceType, otherType));
 		}
 
 		/// <summary>
