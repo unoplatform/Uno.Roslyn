@@ -279,19 +279,19 @@ namespace Microsoft.CodeAnalysis
 		/// <returns></returns>
 		public static bool IsSimpleType(this ITypeSymbol symbol, SyntaxNodeAnalysisContext context)
 		{
-			return symbol.IsOfType<string>(context)
-				|| symbol.IsOfType<double>(context)
-				|| symbol.IsOfType<DateTime>(context)
+			return symbol.SpecialType == SpecialType.System_String
+				|| symbol.SpecialType == SpecialType.System_Double
+				|| symbol.SpecialType == SpecialType.System_DateTime
 				|| symbol.IsOfType<DateTimeOffset>(context)
-				|| symbol.IsOfType<long>(context)
-				|| symbol.IsOfType<uint>(context)
-				|| symbol.IsOfType<ulong>(context)
-				|| symbol.IsOfType<short>(context)
-				|| symbol.IsOfType<ushort>(context)
-				|| symbol.IsOfType<decimal>(context)
-				|| symbol.IsOfType<char>(context)
-				|| symbol.IsOfType<float>(context)
-				|| symbol.IsOfType<int>(context);
+				|| symbol.SpecialType == SpecialType.System_Int64
+				|| symbol.SpecialType == SpecialType.System_UInt32
+				|| symbol.SpecialType == SpecialType.System_UInt64
+				|| symbol.SpecialType == SpecialType.System_Int16
+				|| symbol.SpecialType == SpecialType.System_UInt16
+				|| symbol.SpecialType == SpecialType.System_Decimal
+				|| symbol.SpecialType == SpecialType.System_Char
+				|| symbol.SpecialType == SpecialType.System_Single
+				|| symbol.SpecialType == SpecialType.System_Int32;
 		}
 
 		/// <summary>
