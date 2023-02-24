@@ -162,7 +162,7 @@ namespace Microsoft.CodeAnalysis
 		{
 			var intf = resolvedType
 				.GetAllInterfaces(includeCurrent: true)
-				.FirstOrDefault(i => i.ToDisplayString().StartsWith("System.Collections.Generic.IEnumerable", StringComparison.OrdinalIgnoreCase));
+				.FirstOrDefault(i => i.OriginalDefinition.SpecialType == SpecialType.System_Collections_Generic_IEnumerable_T);
 
 			return intf?.TypeArguments.First();
 		}
@@ -202,7 +202,7 @@ namespace Microsoft.CodeAnalysis
 		public static bool IsNullable(this ITypeSymbol type)
 		{
 			return ((type as INamedTypeSymbol)?.IsGenericType ?? false)
-				&& type.OriginalDefinition.ToDisplayString().Equals("System.Nullable<T>", StringComparison.OrdinalIgnoreCase);
+				&& type.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T;
 		}
 
 		public static bool IsNullable(this ITypeSymbol type, out ITypeSymbol nullableType)
