@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 		}
 
 		public static IEnumerable<IEventSymbol> GetEvents(INamedTypeSymbol symbol) => symbol.GetMembers().OfType<IEventSymbol>();
@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 
 			return false;
 		}
@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 
 			return false;
 		}
@@ -162,47 +162,30 @@ namespace Microsoft.CodeAnalysis
 		{
 			var intf = resolvedType
 				.GetAllInterfaces(includeCurrent: true)
-				.FirstOrDefault(i => i.ToDisplayString().StartsWith("System.Collections.Generic.IEnumerable", StringComparison.OrdinalIgnoreCase));
+				.FirstOrDefault(i => i.OriginalDefinition.SpecialType == SpecialType.System_Collections_Generic_IEnumerable_T);
 
 			return intf?.TypeArguments.First();
 		}
 
 		public static IEnumerable<INamedTypeSymbol> GetAllInterfaces(this ITypeSymbol symbol, bool includeCurrent = true)
 		{
-			if (symbol != null)
-			{
-				if (includeCurrent && symbol.TypeKind == TypeKind.Interface)
-				{
-					yield return (INamedTypeSymbol)symbol;
-				}
-
-				do
-				{
-					foreach (var intf in symbol.Interfaces)
-					{
-						yield return intf;
-
-						foreach (var innerInterface in intf.GetAllInterfaces())
-						{
-							yield return innerInterface;
-						}
-					}
-
-					symbol = symbol.BaseType;
-
-					if (symbol == null)
-					{
-						break;
-					}
-
-				} while (symbol.Name != "Object");
-			}
+            if (symbol != null)
+            {
+                if (includeCurrent && symbol.TypeKind == TypeKind.Interface)
+                {
+                    yield return (INamedTypeSymbol)symbol;
+                }
+                foreach (var @interface in symbol.AllInterfaces)
+                {
+                    yield return @interface;
+                }
+            }
 		}
 
 		public static bool IsNullable(this ITypeSymbol type)
 		{
 			return ((type as INamedTypeSymbol)?.IsGenericType ?? false)
-				&& type.OriginalDefinition.ToDisplayString().Equals("System.Nullable<T>", StringComparison.OrdinalIgnoreCase);
+				&& type.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T;
 		}
 
 		public static bool IsNullable(this ITypeSymbol type, out ITypeSymbol nullableType)
@@ -394,8 +377,8 @@ namespace Microsoft.CodeAnalysis
 		/// <returns></returns>
 		public static bool HasAttributes(this ISymbol symbol, params INamedTypeSymbol[] attributes)
 		{
-			var currentSymbolAttributes = symbol.GetAttributes();
-			return currentSymbolAttributes.Any() && currentSymbolAttributes.All(x => attributes.Contains(x.AttributeClass, SymbolEqualityComparer.Default));
+			var currentSymbolAttributes = symbol.GetAttributes().Select(a => a.AttributeClass);
+			return attributes.All(x => currentSymbolAttributes.Contains(x, SymbolEqualityComparer.Default));
 		}
 	}
 }

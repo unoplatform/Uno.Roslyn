@@ -17,13 +17,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Uno.RoslynHelpers
 {
-    internal static partial class IndentedStringBuilderExtensions
+	internal static partial class IndentedStringBuilderExtensions
     {
 		public static void AppendLine(this IIndentedStringBuilder builder, IFormatProvider formatProvider, string pattern, params object[] replacements)
 		{
