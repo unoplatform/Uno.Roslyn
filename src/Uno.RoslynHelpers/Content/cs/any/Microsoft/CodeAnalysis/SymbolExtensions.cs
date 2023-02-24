@@ -169,17 +169,17 @@ namespace Microsoft.CodeAnalysis
 
 		public static IEnumerable<INamedTypeSymbol> GetAllInterfaces(this ITypeSymbol symbol, bool includeCurrent = true)
 		{
-			if (symbol != null)
-			{
+            if (symbol != null)
+            {
                 if (symbol.TypeKind == TypeKind.Interface)
-				{
-					yield return (INamedTypeSymbol)symbol;
-				}
+                {
+                    yield return (INamedTypeSymbol)symbol;
+                }
                 foreach (var @interface in symbol.AllInterfaces)
-				{
+                {
                     yield return @interface;
-						}
-					}
+                }
+            }
 		}
 
 		public static bool IsNullable(this ITypeSymbol type)

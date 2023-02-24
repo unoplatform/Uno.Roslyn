@@ -16,12 +16,7 @@
 // ******************************************************************
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Uno.RoslynHelpers
 {
@@ -31,7 +26,7 @@ namespace Uno.RoslynHelpers
 
 		public static string Indent(this string text, int indentCount = 1)
 		{
-			return _newLineRegex.Replace(text, new String('\t', indentCount));
+			return _newLineRegex.Replace(text, new string('\t', indentCount));
 		}
 	}
 }
