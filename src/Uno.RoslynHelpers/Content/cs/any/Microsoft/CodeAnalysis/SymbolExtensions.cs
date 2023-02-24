@@ -171,7 +171,7 @@ namespace Microsoft.CodeAnalysis
 		{
             if (symbol != null)
             {
-                if (symbol.TypeKind == TypeKind.Interface)
+                if (includeCurrent && symbol.TypeKind == TypeKind.Interface)
                 {
                     yield return (INamedTypeSymbol)symbol;
                 }
