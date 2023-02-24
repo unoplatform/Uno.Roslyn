@@ -377,8 +377,8 @@ namespace Microsoft.CodeAnalysis
 		/// <returns></returns>
 		public static bool HasAttributes(this ISymbol symbol, params INamedTypeSymbol[] attributes)
 		{
-			var currentSymbolAttributes = symbol.GetAttributes();
-			return currentSymbolAttributes.Any() && currentSymbolAttributes.All(x => attributes.Contains(x.AttributeClass, SymbolEqualityComparer.Default));
+			var currentSymbolAttributes = symbol.GetAttributes().Select(a => a.AttributeClass);
+			return attributes.All(x => currentSymbolAttributes.Contains(x, SymbolEqualityComparer.Default));
 		}
 	}
 }
