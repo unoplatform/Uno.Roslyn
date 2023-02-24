@@ -25,22 +25,26 @@ namespace Microsoft.CodeAnalysis
 {
 	internal static class TypeParameterSymbolExtensions
 	{
-        /// Uses reflection to obtain the EffectiveBaseClassNoUseSiteDiagnostics property and its value. 
-        /// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#275 <summary>
-        private static MethodInfo GetReflectedEffectiveBaseClassMethodInfo(ITypeParameterSymbol typeSymbol)
+		/// <summary>
+        	/// Uses reflection to obtain the EffectiveBaseClassNoUseSiteDiagnostics property and its value. 
+        	/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#275
+        	/// </summary>
+		private static MethodInfo GetReflectedEffectiveBaseClassMethodInfo(ITypeParameterSymbol typeSymbol)
 		{
-            // TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
+			// TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
 			// Consider removing this method if it's not useful.
-            return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveBaseClassNoUseSiteDiagnostics").GetMethod;
+			return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveBaseClassNoUseSiteDiagnostics").GetMethod;
 		}
 
-        /// Uses reflection to obtain the EffectiveInterfacesNoUseSiteDiagnostics property and its value. 
-        /// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#300 <summary>
-        private static MethodInfo GetReflectedEffectiveInterfaceMethodInfo(ITypeParameterSymbol typeSymbol)
+		/// <summary>
+		/// Uses reflection to obtain the EffectiveInterfacesNoUseSiteDiagnostics property and its value. 
+		/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#300
+		/// </summary>
+		private static MethodInfo GetReflectedEffectiveInterfaceMethodInfo(ITypeParameterSymbol typeSymbol)
 		{
-            // TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
-            // Consider removing this method if it's not useful.
-            return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveInterfacesNoUseSiteDiagnostics").GetMethod;
+			// TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
+			// Consider removing this method if it's not useful.
+			return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveInterfacesNoUseSiteDiagnostics").GetMethod;
 		}
 
 		/// <summary>
