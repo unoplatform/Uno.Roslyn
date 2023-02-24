@@ -47,7 +47,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 		}
 
 		public static IEnumerable<IEventSymbol> GetEvents(INamedTypeSymbol symbol) => symbol.GetMembers().OfType<IEventSymbol>();
@@ -73,7 +73,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 
 			return false;
 		}
@@ -99,7 +99,7 @@ namespace Microsoft.CodeAnalysis
 					break;
 				}
 
-			} while (symbol.Name != "Object");
+			} while (symbol.SpecialType != SpecialType.System_Object);
 
 			return false;
 		}
