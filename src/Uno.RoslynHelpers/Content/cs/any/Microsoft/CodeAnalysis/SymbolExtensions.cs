@@ -171,32 +171,15 @@ namespace Microsoft.CodeAnalysis
 		{
 			if (symbol != null)
 			{
-				if (includeCurrent && symbol.TypeKind == TypeKind.Interface)
+                if (symbol.TypeKind == TypeKind.Interface)
 				{
 					yield return (INamedTypeSymbol)symbol;
 				}
-
-				do
+                foreach (var @interface in symbol.AllInterfaces)
 				{
-					foreach (var intf in symbol.Interfaces)
-					{
-						yield return intf;
-
-						foreach (var innerInterface in intf.GetAllInterfaces())
-						{
-							yield return innerInterface;
+                    yield return @interface;
 						}
 					}
-
-					symbol = symbol.BaseType;
-
-					if (symbol == null)
-					{
-						break;
-					}
-
-				} while (symbol.Name != "Object");
-			}
 		}
 
 		public static bool IsNullable(this ITypeSymbol type)
