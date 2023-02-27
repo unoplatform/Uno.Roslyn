@@ -1,15 +1,53 @@
 assembly-versioning-scheme: MajorMinorPatch
-mode: ContinuousDeployment
-next-version: 1.2.0
-continuous-delivery-fallback-tag: ""
+mode: Mainline
+
 branches:
   master:
+    mode: ContinuousDeployment
+    regex: master
     tag: dev
+    increment: Minor
+    is-source-branch-for: ['beta', 'stable']
+
+  pull-request:
+    regex: ^(pull|pull\-requests|pr)[/-]
+    mode: ContinuousDeployment
+    tag: 'PullRequest'
+    tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    increment: Inherit
+
+  beta:
+    mode: ContinuousDeployment
+    regex: ^release/beta/.*
+    tag: beta
+    increment: none
+    source-branches: ['master']
+
   stable:
-    tag: 
-  dev/.*?/(.*?):
+    regex: ^release/stable/.*
+    tag: ''
+    increment: Patch
+    source-branches: ['master','beta']
+    is-mainline: true
+
+  dev:
+    mode: ContinuousDeployment
+    regex: ^dev/.*?/(.*?)
     tag: dev.{BranchName}
-  projects/(.*?):
+    source-branches: ['master', 'release', 'projects', 'feature']
+    increment: none
+
+  projects:
     tag: proj-{BranchName}
+    regex: ^projects/(.*?)
+    source-branches: ['master']
+    increment: none
+
+  feature:
+    tag: feature.{BranchName}
+    regex: ^feature/(.*?)
+    source-branches: ['master']
+    increment: none
+
 ignore:
   sha: []

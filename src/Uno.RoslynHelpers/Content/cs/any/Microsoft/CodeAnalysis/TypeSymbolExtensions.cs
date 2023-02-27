@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 // ******************************************************************
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +77,7 @@ namespace Microsoft.CodeAnalysis
 			var currentTypeSymbol = compareUsingSubstitutedType ? current : current?.OriginalDefinition;
 			var otherTypeSymbol = compareUsingSubstitutedType ? other : other?.OriginalDefinition;
 
-			return currentTypeSymbol != null && currentTypeSymbol.OriginalDefinition.Equals(otherTypeSymbol);
+			return currentTypeSymbol != null && SymbolEqualityComparer.Default.Equals(currentTypeSymbol.OriginalDefinition, otherTypeSymbol);
 		}
 
 		/// <summary>
@@ -116,16 +118,15 @@ namespace Microsoft.CodeAnalysis
 		/// Checks if the underlying type of the current type symbol derives from the type with the provided name  
 		/// </summary>
 		/// <param name="symbol">The current type symbol</param>
-		/// <param name="otherTypeFullName">The full name for the System.Type instance the current type symbol will be checked against for inheritance/implementation</param>
-		/// <param name="context">The analysis context</param>
+		/// <param name="otherType">The other type symbol that the <paramref name="symbol"/> will be checked against for inheritance/implementation</param>
 		/// <returns>If the underlying type of the current type symbol implements or inherits the target type</returns>
 		public static bool DerivesFromType(this ITypeSymbol symbol, ITypeSymbol otherType)
 		{
 			var baseTypes = GetBaseTypesAndThis(symbol);
 			var implementedInterfaces = GetAllInterfacesIncludingThis(symbol);
 
-			return baseTypes.Any(baseType => baseType.Equals(otherType) ||
-				   implementedInterfaces.Any(baseInterfaceType => baseInterfaceType.Equals(otherType)));
+			return baseTypes.Any(baseType => SymbolEqualityComparer.Default.Equals(baseType, otherType)) ||
+				   implementedInterfaces.Any(baseInterfaceType => SymbolEqualityComparer.Default.Equals(baseInterfaceType, otherType));
 		}
 
 		/// <summary>
@@ -278,19 +279,19 @@ namespace Microsoft.CodeAnalysis
 		/// <returns></returns>
 		public static bool IsSimpleType(this ITypeSymbol symbol, SyntaxNodeAnalysisContext context)
 		{
-			return symbol.IsOfType<string>(context)
-				|| symbol.IsOfType<double>(context)
-				|| symbol.IsOfType<DateTime>(context)
+			return symbol.SpecialType == SpecialType.System_String
+				|| symbol.SpecialType == SpecialType.System_Double
+				|| symbol.SpecialType == SpecialType.System_DateTime
 				|| symbol.IsOfType<DateTimeOffset>(context)
-				|| symbol.IsOfType<long>(context)
-				|| symbol.IsOfType<uint>(context)
-				|| symbol.IsOfType<ulong>(context)
-				|| symbol.IsOfType<short>(context)
-				|| symbol.IsOfType<ushort>(context)
-				|| symbol.IsOfType<decimal>(context)
-				|| symbol.IsOfType<char>(context)
-				|| symbol.IsOfType<float>(context)
-				|| symbol.IsOfType<int>(context);
+				|| symbol.SpecialType == SpecialType.System_Int64
+				|| symbol.SpecialType == SpecialType.System_UInt32
+				|| symbol.SpecialType == SpecialType.System_UInt64
+				|| symbol.SpecialType == SpecialType.System_Int16
+				|| symbol.SpecialType == SpecialType.System_UInt16
+				|| symbol.SpecialType == SpecialType.System_Decimal
+				|| symbol.SpecialType == SpecialType.System_Char
+				|| symbol.SpecialType == SpecialType.System_Single
+				|| symbol.SpecialType == SpecialType.System_Int32;
 		}
 
 		/// <summary>
@@ -379,7 +380,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the accessible (public and protected) methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are available from within the provided type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are available from within the provided type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllAccessibleMethodsFromWithinType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -400,7 +401,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the publicly accessible methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods that are publicly accessible for a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		public static IEnumerable<IMethodSymbol> GetAllPubliclyAccessibleMethodsFromType(
 			this ITypeSymbol type,
 			SyntaxNodeAnalysisContext context,
@@ -420,7 +421,7 @@ namespace Microsoft.CodeAnalysis
 		/// <param name="visitHierarchy">If true, the returned methods will included the methods this type inherits from</param>
 		/// <param name="includeObsoleteMethods">If true, this will include the methods marked as obsolete</param>
 		/// <param name="methodName">Only targets methods with this specific name (optionnal)</param>
-		/// <returns>The methods from a given type (includes inherited methods if <see cref="visitHierarchy"/> is set to true)</returns>
+		/// <returns>The methods from a given type (includes inherited methods if <paramref name="visitHierarchy"/> is set to true)</returns>
 		private static IEnumerable<IMethodSymbol> GetAllMethodsWithinType(
 			ITypeSymbol currentType,
 			SyntaxNodeAnalysisContext context,
@@ -479,7 +480,7 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary<TKey,T> or Dictionary<TKey,List<T>>, but not Dictionary<bool,int> or Dictionary<bool,List<string>>), false otherwise
+		/// Returns true if typeSymbol is a type parameter (eg 'TValue') or a generic type with only type parameters within its type arguments (eg Dictionary&lt;TKey,T&gt; or Dictionary&lt;TKey,List&lt;T&gt;&gt;, but not Dictionary&lt;bool,int&gt; or Dictionary&lt;bool,List&lt;string&gt;&gt;), false otherwise
 		/// </summary>
 		/// <param name="typeSymbol"></param>
 		/// <returns></returns>

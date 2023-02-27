@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.3</TargetFrameworks>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<Product>$(AssemblyName) ($(TargetFramework))</Product>
 		<Authors>nventive</Authors>
-		<NoWarn>$(NoWarn);1998;1591;1573;1572;1574;1712;1711;1570</NoWarn>
 		<BuildForLiveUnitTesting>false</BuildForLiveUnitTesting>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -12,7 +11,7 @@
 		<DebugSymbols>True</DebugSymbols>
 
 		<PackageProjectUrl>https://github.com/nventive/Uno.Roslyn</PackageProjectUrl>
-		<PackageIconUrl>https://nv-assets.azurewebsites.net/logos/uno.png</PackageIconUrl>
+		<PackageIcon>uno.png</PackageIcon>
 		<RepositoryUrl>https://github.com/nventive/Uno.Roslyn</RepositoryUrl>
 		<Description>A set of Roslyn extensions and helpers packaged as content files to avoid extertnal dependencies in analyzers and Uno source generators</Description>
 		<Copyright>Copyright (C) 2015-2018 nventive inc. - all rights reserved</Copyright>
@@ -25,20 +24,30 @@
 		
 		<!-- This project does not create any binary -->
 		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<Nullable>enable</Nullable>
+		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
+	
+	<ItemGroup>
+		<None Include="uno.png" Pack="true" PackagePath="\" />
+	</ItemGroup>	
 	
 	<ItemGroup>
 		<!-- 
 		This is required for the including project to compile the .cs file 
 		provided by this package
 		-->
-		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="1.3.1" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="1.3.1" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.3.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.3.0" />
 	</ItemGroup>
 	
 	<ItemGroup>
+		<Content Include="_._">
+			<Pack>true</Pack>
+			<PackagePath>lib/$(TargetFramework)</PackagePath>			
+		</Content>
 		<Content Include="Content\**\*.cs">
-			<!-- Ensure that the content's build action in the target project is Compile -->
+				<!-- Ensure that the content's build action in the target project is Compile -->
 			<BuildAction>Compile</BuildAction>
 		</Content>
 	</ItemGroup>

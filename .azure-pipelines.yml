@@ -1,33 +1,42 @@
 pool:
-  name: 'Hosted VS2017'
+  vmImage: windows-2019
 
 trigger:
   branches:
     include:
       - master
-      - stable
+      - stable/*
 
 pr:
   branches:
     include:
       - master
-      - stable
+      - stable/*
 
 steps:
   - checkout: self
     clean: true
 
-  - powershell: './build/build.ps1 -Script build/build.cake'
+  - task: gitversion/setup@0
+    inputs:
+      versionSpec: '5.x'
+
+  - task: gitversion/execute@0
+    inputs:
+      updateAssemblyInfo: 'False'
+      useConfigFile: true
+      configFilePath: GitVersion.yml
+
+    displayName: Use GitVersion
+
+  - pwsh: |
+      cd $(build.sourcesdirectory)/src
+      dotnet pack Uno.Roslyn.sln /r /p:Configuration=Release "/p:PackageOutputPath=$(build.artifactstagingdirectory)" "/p:PackageVersion=$(GITVERSION.FullSemVer)" "/p:InformationalVersion=$(GITVERSION.InformationalVersion)"  /detailedsummary
+    displayName: Build
 
   - task: VSTest@2
     inputs:
       testAssemblyVer2: '**\*.tests.dll'
-
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: ./build/
-      Contents: '*.nupkg'
-      TargetFolder: $(Build.ArtifactStagingDirectory)
 
   - task: PublishBuildArtifacts@1
     inputs:

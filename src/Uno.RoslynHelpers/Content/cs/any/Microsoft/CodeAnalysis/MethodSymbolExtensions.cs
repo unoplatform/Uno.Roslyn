@@ -14,13 +14,12 @@
 // limitations under the License.
 //
 // ******************************************************************
+#nullable disable
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Microsoft.CodeAnalysis
@@ -33,7 +32,7 @@ namespace Microsoft.CodeAnalysis
 		{
 			var currentArgTypes = current.Parameters.Select(param => param.Type);
 			var otherArgTypes = other.Parameters.Select(param => param.Type);
-			return currentArgTypes.SequenceEqual(otherArgTypes);
+			return currentArgTypes.SequenceEqual(otherArgTypes, SymbolEqualityComparer.Default);
 		}
 
 		/// <summary>
@@ -99,7 +98,7 @@ namespace Microsoft.CodeAnalysis
 			return asyncCandidateReturnType != null &&
 				   asyncCandidateReturnType.IsGenericType &&
 				   asyncCandidate.ReturnType.OriginalDefinition.DerivesFromType<Task>(context) &&
-				   asyncCandidateReturnType.TypeArguments.FirstOrDefault()?.Equals(target.ReturnType) == true;
+				   SymbolEqualityComparer.Default.Equals(asyncCandidateReturnType.TypeArguments.FirstOrDefault(), target.ReturnType) == true;
 		}
 
 		/// <summary>
@@ -228,29 +227,28 @@ namespace Microsoft.CodeAnalysis
 		}
 
 		/// <summary>
-		/// Indicates if the current method is a constructor (normal, static, shared) or a destructor
+		/// Indicates if the current method is a constructor (normal, static) or a destructor
 		/// </summary>
 		/// <param name="currentMethod">The current method</param>
 		/// <returns>True if the current method is a constructor or a destructor</returns>
 		public static bool IsConstructorOrDestructor(this IMethodSymbol currentMethod) => currentMethod.IsConstructor() || currentMethod.IsDestructor();
 
 		/// <summary>
-		/// Indicates if the current method is a constructor (normal, static, shared)
+		/// Indicates if the current method is a destructor
 		/// </summary>
 		/// <param name="currentMethod">The current method</param>
-		/// <returns>True if the current method is a constructor or a destructor</returns>
+		/// <returns>True if the current method is a destructor</returns>
 		public static bool IsDestructor(this IMethodSymbol currentMethod) =>
-			currentMethod.MethodKind == MethodKind.SharedConstructor ||
-			currentMethod.MethodKind == MethodKind.StaticConstructor;
+			currentMethod.MethodKind == MethodKind.Destructor;
 
 		/// <summary>
-		/// Indicates if the current method is a destructor (normal, static, shared)
+		/// Indicates if the current method is a constructor (normal, static)
 		/// </summary>
 		/// <param name="currentMethod">The current method</param>
-		/// <returns>True if the current method is a constructor or a destructor</returns>
+		/// <returns>True if the current method is a constructor</returns>
 		public static bool IsConstructor(this IMethodSymbol currentMethod) =>
 			currentMethod.MethodKind == MethodKind.Constructor ||
-			currentMethod.MethodKind == MethodKind.Destructor;
+			currentMethod.MethodKind == MethodKind.StaticConstructor;
 
 		/// <summary>
 		/// Indicates if the method is a delegate invocation

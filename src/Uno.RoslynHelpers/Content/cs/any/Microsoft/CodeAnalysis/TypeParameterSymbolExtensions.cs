@@ -14,41 +14,44 @@
 // limitations under the License.
 //
 // ******************************************************************
-using System;
+#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Microsoft.CodeAnalysis
 {
 	internal static class TypeParameterSymbolExtensions
 	{
-		/// Uses reflection to obtain the EffectiveBaseClassNoUseSiteDiagnostics property and its value. 
-		/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#275
+		/// <summary>
+        	/// Uses reflection to obtain the EffectiveBaseClassNoUseSiteDiagnostics property and its value. 
+        	/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#275
+        	/// </summary>
 		private static MethodInfo GetReflectedEffectiveBaseClassMethodInfo(ITypeParameterSymbol typeSymbol)
 		{
-			return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveBaseClassNoUseSiteDiagnostics").GetMethod; ;
+			// TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
+			// Consider removing this method if it's not useful.
+			return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveBaseClassNoUseSiteDiagnostics").GetMethod;
 		}
 
+		/// <summary>
 		/// Uses reflection to obtain the EffectiveInterfacesNoUseSiteDiagnostics property and its value. 
 		/// http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.CSharp/Symbols/TypeParameterSymbol.cs#300
+		/// </summary>
 		private static MethodInfo GetReflectedEffectiveInterfaceMethodInfo(ITypeParameterSymbol typeSymbol)
 		{
+			// TODO: This reflection might have been broken starting with https://github.com/dotnet/roslyn/pull/39498
+			// Consider removing this method if it's not useful.
 			return typeSymbol.GetType().GetRuntimeProperties().FirstOrDefault(methodInfo => methodInfo.Name == "EffectiveInterfacesNoUseSiteDiagnostics").GetMethod;
 		}
 
 		/// <summary>
-		/// Returns true if two ITypeParameterSymbols (symbols corresponding to a type parameter, eg 'T' in SomeMethod<T>() { T t = ... }) appear to be equivalent, 
+		/// Returns true if two ITypeParameterSymbols (symbols corresponding to a type parameter, eg 'T' in SomeMethod&lt;T&gt;() { T t = ... }) appear to be equivalent, 
 		/// meaning that they appear to have matching constraints.
 		/// 
-		/// Note: this method is currently not watertight, due to difficult cases like self-referential constraints (eg 'where T : IComparable<T>')
+		/// Note: this method is currently not watertight, due to difficult cases like self-referential constraints (eg 'where T : IComparable&lt;T&gt;')
 		/// </summary>
 		/// <param name="current">Symbol to compare</param>
 		/// <param name="other">Symbol to compare</param>
@@ -72,7 +75,7 @@ namespace Microsoft.CodeAnalysis
 		/// Provides all the resolved/effetive interface constraints of the given type parameter symbol. 
 		/// <example>
 		/// <code>
-		/// public Method<T, U, V> where T : U where U : IEnumerable, V where V : IComparable
+		/// public Method&lt;T, U, V&gt; where T : U where U : IEnumerable, V where V : IComparable
 		/// // U will have the following effective interface constraints: IEnumerable, Icomparable
 		/// </code>
 		/// </example>

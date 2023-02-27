@@ -14,9 +14,10 @@
 // limitations under the License.
 //
 // ******************************************************************
+#nullable disable
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -91,7 +92,7 @@ namespace Uno.RoslynHelpers.Helpers
 			{
 				var parameterSymbol = _model.GetDeclaredSymbol(simpleLambda.Parameter);
 
-				var isBuilderType = parameterSymbol?.ToDisplayString()?.EndsWith("Builder");
+				var isBuilderType = parameterSymbol?.ToDisplayString()?.EndsWith("Builder", StringComparison.Ordinal);
 
 				if (isBuilderType ?? false)
 				{
@@ -100,23 +101,6 @@ namespace Uno.RoslynHelpers.Helpers
 			}
 
 			return false;
-		}
-
-		private static int Factorial(int input)
-		{
-			if (input < 0)
-			{
-				throw new ArgumentOutOfRangeException("Factorial is only defined for non-negative integers.");
-			}
-
-			int answer = 1;
-
-			while (input > 1)
-			{
-				answer *= input--;
-			}
-
-			return answer;
 		}
 
 		public class RegionInfo
